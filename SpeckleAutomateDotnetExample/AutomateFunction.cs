@@ -13,8 +13,7 @@
     {
       public static async Task Run(
         AutomationContext automationContext,
-        FunctionInputs functionInputs,
-        string MONGO_CONNECT
+        FunctionInputs functionInputs
       )
       {
             // Connect to MongoDB
