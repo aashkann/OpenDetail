@@ -18,19 +18,18 @@
       {
 
         // Connect to MongoDB
-            var MONGO_CONNECT = System.Environment.GetEnvironmentVariables()["MONGO_CONNECT"];
-            Console.WriteLine($"MONGO_CONNECT: {MONGO_CONNECT}");
-            var mongoConnect = Environment.GetEnvironmentVariable("MONGO_CONNECT");
-            Console.WriteLine($"mongoConnect: {mongoConnect}");
+        var MONGO_CONNECT = System.Environment.GetEnvironmentVariables()["MONGO_CONNECT"];
+        Console.WriteLine($"MONGO_CONNECT: {MONGO_CONNECT}");
+        var mongoConnect = Environment.GetEnvironmentVariable("MONGO_CONNECT");
+        Console.WriteLine($"mongoConnect: {mongoConnect}");
 
-            const string connectionUri = "mongodb+srv://aecuser:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster";
-            var settings = MongoClientSettings.FromConnectionString(connectionUri);
-            settings.ServerApi = new ServerApi(ServerApiVersion.V1);
-            var client = new MongoClient(settings);
+        const string connectionUri = "mongodb+srv://aecuser:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster";
+        var settings = MongoClientSettings.FromConnectionString(connectionUri);
+        settings.ServerApi = new ServerApi(ServerApiVersion.V1);
+        var client = new MongoClient(settings);
 
-            var database = client.GetDatabase("opendetail");
-            var collection = database.GetCollection<BsonDocument>("details");
-
+        var database = client.GetDatabase("opendetail");
+        var collection = database.GetCollection<BsonDocument>("details");
 
         // Send a ping to confirm a successful connection
         try
@@ -43,7 +42,6 @@
             Console.WriteLine(ex);
         }
 
-
         Console.WriteLine("Starting execution");
         _ = typeof(ObjectsKit).Assembly; // INFO: Force objects kit to initialize
 
@@ -52,21 +50,44 @@
 
         Console.WriteLine("Received version: " + commitObject);
 
-            var openDetailObject = new OpenDetailObject();
-        
+        var openDetailObject = new OpenDetailObject();
+
         var count = commitObject
-          .Flatten()
-          .Count(b => b.speckle_type == functionInputs.SpeckleTypeToCount);
-            var speckleURL = commitObject.Flatten();
-            openDetailObject.URL = automationContext.SpeckleClient.ServerUrl;
+            .Flatten()
+            .Count(b => b.speckle_type == functionInputs.SpeckleTypeToCount);
+        var speckleURL = commitObject.Flatten();
+        openDetailObject.URL = automationContext.SpeckleClient.ServerUrl;
 
-            var bsonDocument = openDetailObject.ToBsonDocument();
+        var filter = Builders<BsonDocument>.Filter.Eq("URL", openDetailObject.URL);
+        var updateDefinition = Builders<BsonDocument>.Update.Set("URL", openDetailObject.URL);
 
-            // Insert the BSON document into the collection
-            collection.InsertOne(bsonDocument);
+        var options = new UpdateOptions { IsUpsert = true };
 
-            Console.WriteLine($"Counted {count} objects");
+        // Update the document if it exists, otherwise insert a new one
+        var result = await collection.UpdateOneAsync(filter, updateDefinition, options);
+
+        if (result.IsAcknowledged)
+        {
+            if (result.ModifiedCount > 0)
+            {
+                Console.WriteLine("Document updated.");
+            }
+            else if (result.UpsertedId != null)
+            {
+                Console.WriteLine("Document inserted.");
+            }
+            else
+            {
+                Console.WriteLine("No changes.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Write operation not acknowledged.");
+        }
+
+        Console.WriteLine($"Counted {count} objects");
 
         automationContext.MarkRunSuccess($"Counted {count} objects");
-      }
     }
+}
