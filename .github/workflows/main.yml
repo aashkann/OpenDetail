@@ -10,10 +10,12 @@ jobs:
     env:
       FUNCTION_SCHEMA_FILE_NAME: functionSchema.json
       SPECKLE_AUTOMATE_URL: https://automate.speckle.dev
-      MONGO_CONNECT: ${{ secrets.MONGO_CONNECT }}  # Adding the MONGO_CONNECT variable
+      MONGO_CONNECT: mongodb+srv://aecuser:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster
 
     runs-on: ubuntu-latest
     steps:
+        env: # Or as an environment variable
+          MONGO_CONNECT: ${{ secrets.MONGO_CONNECT }}
       - uses: actions/checkout@v4.1.1
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3.2.0
