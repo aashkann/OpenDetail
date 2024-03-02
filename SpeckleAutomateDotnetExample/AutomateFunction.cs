@@ -23,6 +23,9 @@ public static class AutomateFunction
       .Flatten()
       .Count(b => b.speckle_type == functionInputs.SpeckleTypeToCount);
 
+    var mongoConnect = Environment.GetEnvironmentVariable("MONGO_CONNECT");
+    Console.WriteLine($"MONGO_CONNECT: {mongoConnect}");
+
     Console.WriteLine($"Counted {count} objects");
     automationContext.MarkRunSuccess($"Counted {count} objects");
   }
