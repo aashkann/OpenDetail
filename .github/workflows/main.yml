@@ -23,7 +23,7 @@ jobs:
       - name: Extract functionInputSchema
         id: extract_schema
         working-directory: "SpeckleAutomateDotnetExample"
-        with:
+        env:
           MONGO_CONNECT: ${{ secrets.MONGO_CONNECT }}
         run: |
           dotnet build
