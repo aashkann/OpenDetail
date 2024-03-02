@@ -33,8 +33,10 @@ jobs:
           cat ${HOME}/functionSchema.json
       - name: Speckle Automate Function - Build and Publish
         uses: specklesystems/speckle-automate-github-composite-action@0.7.2
+        env:
+          MONGO_CONNECT: ${{ secrets.MONGO_CONNECT }}
         with:
-          speckle_function_command: "dotnet SpeckleAutomateDotnetExample.dll"
+          speckle_function_command: "dotnet SpeckleAutomateDotnetExample.dll MONGO_CONNECT"
           speckle_automate_url: ${{ env.SPECKLE_AUTOMATE_URL }}
           speckle_token: ${{ secrets.SPECKLE_FUNCTION_TOKEN }}
           speckle_function_id: ${{ secrets.SPECKLE_FUNCTION_ID }}
