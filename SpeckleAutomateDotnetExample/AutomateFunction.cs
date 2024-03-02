@@ -44,6 +44,7 @@ public static class AutomateFunction
         collection.InsertOne(bsonDocument);
 
         Console.WriteLine($"Counted {count} objects");
+
     automationContext.MarkRunSuccess($"Counted {count} objects");
   }
 }
