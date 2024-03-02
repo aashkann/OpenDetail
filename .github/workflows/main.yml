@@ -22,6 +22,8 @@ jobs:
         run: dotnet restore
       - name: Extract functionInputSchema
         id: extract_schema
+      env:
+        MONGO_CONNECT: ${{ secrets.MONGO_CONNECT }}
         working-directory: "SpeckleAutomateDotnetExample"
         run: |
           dotnet build
@@ -32,7 +34,6 @@ jobs:
         with:
           speckle_function_command: "dotnet SpeckleAutomateDotnetExample.dll"
           speckle_automate_url: ${{ env.SPECKLE_AUTOMATE_URL }}
-          MONGO_CONNECT: ${{ secrets.MONGO_CONNECT }}
           speckle_token: ${{ secrets.SPECKLE_FUNCTION_TOKEN }}
           speckle_function_id: ${{ secrets.SPECKLE_FUNCTION_ID }}
           speckle_function_input_schema_file_path: ${{ env.FUNCTION_SCHEMA_FILE_NAME }}
