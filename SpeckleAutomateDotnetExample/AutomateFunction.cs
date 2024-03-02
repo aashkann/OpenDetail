@@ -51,8 +51,8 @@
         var openDetailObject = new DetailObject();
         openDetailObject.Id = ObjectId.GenerateNewId();
         var count = commitObject
-          .Flatten()
-          .Count(b => b.speckle_type == functionInputs.SpeckleTypeToCount);
+          .Flatten();
+          
             var speckleURL = commitObject.Flatten();
             openDetailObject.URL = automationContext.SpeckleClient.ServerUrl;
 
