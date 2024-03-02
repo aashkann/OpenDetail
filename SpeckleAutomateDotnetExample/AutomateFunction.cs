@@ -19,7 +19,7 @@
 
         // Connect to MongoDB
             var MONGO_CONNECT = System.Environment.GetEnvironmentVariables()["MONGO_CONNECT"];
-            Console.WriteLine($"MONGO_CONNECT: {mongoConnect}");
+            Console.WriteLine($"MONGO_CONNECT: {MONGO_CONNECT}");
             var mongoConnect = Environment.GetEnvironmentVariable("MONGO_CONNECT");
             Console.WriteLine($"mongoConnect: {mongoConnect}");
 
