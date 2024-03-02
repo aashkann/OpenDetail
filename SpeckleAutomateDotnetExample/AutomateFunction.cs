@@ -18,7 +18,11 @@ public static class AutomateFunction
   {
 
         // Connect to MongoDB
-        var client = new MongoClient("mongodb+srv://<username>:<password>@opendetail.e8ia6ef.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetail");
+        const string connectionUri = "mongodb+srv://aechack2024:aechack2024@opendetail.e8ia6ef.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetail";
+        var settings = MongoClientSettings.FromConnectionString(connectionUri);
+        settings.ServerApi = new ServerApi(ServerApiVersion.V1);
+        var client = new MongoClient(settings);
+
         var database = client.GetDatabase("opendetail");
         var collection = database.GetCollection<BsonDocument>("details");
 
