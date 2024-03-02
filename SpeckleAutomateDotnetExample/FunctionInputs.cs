@@ -8,5 +8,8 @@ using System.ComponentModel.DataAnnotations;
 public struct FunctionInputs
 {
   [Required]
-  public string SpeckleTypeToCount;
+  public string SpeckleTypeToCount; 
+
+
+
 }

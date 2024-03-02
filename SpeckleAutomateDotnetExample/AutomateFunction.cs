@@ -1,8 +1,13 @@
+using Amazon.Runtime.Internal.Endpoints.StandardLibrary;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using Objects;
 using Objects.Geometry;
 using Speckle.Automate.Sdk;
+using Speckle.Automate.Sdk.Schema;
 using Speckle.Core.Logging;
 using Speckle.Core.Models.Extensions;
+using SpeckleAutomateDotnetExample;
 
 public static class AutomateFunction
 {
@@ -11,7 +16,13 @@ public static class AutomateFunction
     FunctionInputs functionInputs
   )
   {
-    Console.WriteLine("Starting execution");
+
+        // Connect to MongoDB
+        var client = new MongoClient("mongodb+srv://aechack2024:aechack2024@opendetailcluster.qgxprtm.mongodb.net/");
+        var database = client.GetDatabase("opendetail");
+        var collection = database.GetCollection<BsonDocument>("details");
+
+        Console.WriteLine("Starting execution");
     _ = typeof(ObjectsKit).Assembly; // INFO: Force objects kit to initialize
 
     Console.WriteLine("Receiving version");
@@ -19,11 +30,20 @@ public static class AutomateFunction
 
     Console.WriteLine("Received version: " + commitObject);
 
+        var openDetailObject = new OpenDetailObject();
+        
     var count = commitObject
       .Flatten()
       .Count(b => b.speckle_type == functionInputs.SpeckleTypeToCount);
+        var speckleURL = commitObject.Flatten();
+        openDetailObject.URL = automationContext.SpeckleClient.ServerUrl;
 
-    Console.WriteLine($"Counted {count} objects");
+        var bsonDocument = openDetailObject.ToBsonDocument();
+
+        // Insert the BSON document into the collection
+        collection.InsertOne(bsonDocument);
+
+        Console.WriteLine($"Counted {count} objects");
     automationContext.MarkRunSuccess($"Counted {count} objects");
   }
 }
