@@ -52,38 +52,21 @@
 
         Console.WriteLine("Received version: " + commitObject);
 
-        var openDetailObject = new OpenDetailObject();
+            var openDetailObject = new OpenDetailObject();
+        
+        var count = commitObject
+          .Flatten()
+          .Count(b => b.speckle_type == functionInputs.SpeckleTypeToCount);
+            var speckleURL = commitObject.Flatten();
+            openDetailObject.URL = automationContext.SpeckleClient.ServerUrl;
 
-        var filter = Builders<BsonDocument>.Filter.Eq("URL", openDetailObject.URL);
-        var updateDefinition = Builders<BsonDocument>.Update.Set("URL", openDetailObject.URL);
+            var bsonDocument = openDetailObject.ToBsonDocument();
 
-        var options = new UpdateOptions { IsUpsert = true };
+            // Insert the BSON document into the collection
+            collection.InsertOne(bsonDocument);
 
-        // Update the document if it exists, otherwise insert a new one
-        var result = await collection.UpdateOneAsync(filter, updateDefinition, options);
-
-        if (result.IsAcknowledged)
-        {
-            if (result.ModifiedCount > 0)
-            {
-                Console.WriteLine("Document updated.");
-            }
-            else if (result.UpsertedId != null)
-            {
-                Console.WriteLine("Document inserted.");
-            }
-            else
-            {
-                Console.WriteLine("No changes.");
-            }
-        }
-        else
-        {
-            Console.WriteLine("Write operation not acknowledged.");
-        }
-
-        Console.WriteLine($"Counted {count} objects");
+            Console.WriteLine($"Counted {count} objects");
 
         automationContext.MarkRunSuccess($"Counted {count} objects");
-    }
+      }
     }
