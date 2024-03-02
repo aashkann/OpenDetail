@@ -18,7 +18,7 @@ public static class AutomateFunction
   {
 
         // Connect to MongoDB
-        var client = new MongoClient("mongodb+srv://aechack2024:aechack2024@opendetailcluster.qgxprtm.mongodb.net/");
+        var client = new MongoClient("mongodb+srv://aechack2024:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster");
         var database = client.GetDatabase("opendetail");
         var collection = database.GetCollection<BsonDocument>("details");
 
