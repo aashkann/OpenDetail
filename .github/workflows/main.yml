@@ -18,6 +18,8 @@ jobs:
         uses: actions/setup-dotnet@v3.2.0
         with:
           dotnet-version: 7.x
+        env:
+          MONGO_CONNECT: ${{ secrets.MONGO_CONNECT }}
       - name: Restore dependencies
         run: dotnet restore
       - name: Extract functionInputSchema
@@ -31,8 +33,6 @@ jobs:
           cat ${HOME}/functionSchema.json
       - name: Speckle Automate Function - Build and Publish
         uses: specklesystems/speckle-automate-github-composite-action@0.7.2
-        env:
-          MONGO_CONNECT: ${{ secrets.MONGO_CONNECT }}
         with:
           speckle_function_command: "dotnet SpeckleAutomateDotnetExample.dll"
           speckle_automate_url: ${{ env.SPECKLE_AUTOMATE_URL }}
