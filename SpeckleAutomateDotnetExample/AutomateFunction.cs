@@ -16,14 +16,9 @@
         FunctionInputs functionInputs
       )
       {
+            // Connect to MongoDB
+            string connectionUri = Environment.GetEnvironmentVariable("MONGO_CONNECT") ??  "mongodb+srv://aecuser:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster";
 
-        // Connect to MongoDB
-            var MONGO_CONNECT = System.Environment.GetEnvironmentVariables()["MONGO_CONNECT"];
-            Console.WriteLine($"MONGO_CONNECT: {MONGO_CONNECT}");
-            var mongoConnect = Environment.GetEnvironmentVariable("MONGO_CONNECT");
-            Console.WriteLine($"mongoConnect: {mongoConnect}");
-
-            const string connectionUri = "mongodb+srv://aecuser:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster";
             var settings = MongoClientSettings.FromConnectionString(connectionUri);
             settings.ServerApi = new ServerApi(ServerApiVersion.V1);
             var client = new MongoClient(settings);
@@ -52,8 +47,8 @@
 
         Console.WriteLine("Received version: " + commitObject);
 
-            var openDetailObject = new OpenDetailObject();
-        
+        var openDetailObject = new OpenDetailObject();
+        openDetailObject.Id = ObjectId.GenerateNewId();
         var count = commitObject
           .Flatten()
           .Count(b => b.speckle_type == functionInputs.SpeckleTypeToCount);
