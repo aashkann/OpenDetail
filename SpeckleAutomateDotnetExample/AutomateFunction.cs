@@ -17,7 +17,12 @@
       )
       {
 
-            // Connect to MongoDB
+        // Connect to MongoDB
+            var MONGO_CONNECT = System.Environment.GetEnvironmentVariables()["MONGO_CONNECT"];
+            Console.WriteLine($"MONGO_CONNECT: {mongoConnect}");
+            var mongoConnect = Environment.GetEnvironmentVariable("MONGO_CONNECT");
+            Console.WriteLine($"mongoConnect: {mongoConnect}");
+
             const string connectionUri = "mongodb+srv://aecuser:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster";
             var settings = MongoClientSettings.FromConnectionString(connectionUri);
             settings.ServerApi = new ServerApi(ServerApiVersion.V1);
