@@ -17,7 +17,7 @@
       )
       {
             // Connect to MongoDB
-            string connectionUri = Environment.GetEnvironmentVariable("MONGO_CONNECT") ??  "mongodb+srv://aecuser:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster";
+            string connectionUri = Environment.GetEnvironmentVariable("MONGO_CONNECT") ??  "empty";
 
             var settings = MongoClientSettings.FromConnectionString(connectionUri);
             settings.ServerApi = new ServerApi(ServerApiVersion.V1);
