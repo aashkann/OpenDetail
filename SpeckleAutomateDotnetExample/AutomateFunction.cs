@@ -47,7 +47,7 @@
 
         Console.WriteLine("Received version: " + commitObject);
 
-        var openDetailObject = new OpenDetailObject();
+        var openDetailObject = new DetailObject();
         openDetailObject.Id = ObjectId.GenerateNewId();
         var count = commitObject
           .Flatten()
