@@ -10,6 +10,7 @@ jobs:
     env:
       FUNCTION_SCHEMA_FILE_NAME: functionSchema.json
       SPECKLE_AUTOMATE_URL: https://automate.speckle.dev
+      MONGO_CONNECT: ${{ secrets.MONGO_CONNECT }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.1
