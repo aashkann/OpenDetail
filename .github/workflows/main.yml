@@ -10,6 +10,7 @@ jobs:
     env:
       FUNCTION_SCHEMA_FILE_NAME: functionSchema.json
       SPECKLE_AUTOMATE_URL: https://automate.speckle.dev
+      MONGO_CONNECT: ${{ secrets.MONGO_CONNECT }}  # Adding the MONGO_CONNECT variable
 
     runs-on: ubuntu-latest
     steps:
@@ -22,8 +23,6 @@ jobs:
         run: dotnet restore
       - name: Extract functionInputSchema
         id: extract_schema
-      env:
-        MONGO_CONNECT: ${{ secrets.MONGO_CONNECT }}
         working-directory: "SpeckleAutomateDotnetExample"
         run: |
           dotnet build
