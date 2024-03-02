@@ -14,8 +14,10 @@
       public static async Task Run(
         AutomationContext automationContext,
         FunctionInputs functionInputs
-      )
-      {
+        string mongoConnect
+    )
+    {
+            Console.WriteLine($"MongoDB Connection String: {mongoConnect}");
             // Connect to MongoDB
             string connectionUri = Environment.GetEnvironmentVariable("MONGO_CONNECT") ??  "mongodb+srv://aecuser:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster";
 
