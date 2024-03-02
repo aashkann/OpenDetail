@@ -18,7 +18,7 @@
       {
 
             // Connect to MongoDB
-            const string connectionUri = "mongodb+srv://aecuser:aechack2024@opendetail.e8ia6ef.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetail";
+            const string connectionUri = "mongodb+srv://aecuser:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster";
             var settings = MongoClientSettings.FromConnectionString(connectionUri);
             settings.ServerApi = new ServerApi(ServerApiVersion.V1);
             var client = new MongoClient(settings);
@@ -26,7 +26,20 @@
             var database = client.GetDatabase("opendetail");
             var collection = database.GetCollection<BsonDocument>("details");
 
-            Console.WriteLine("Starting execution");
+
+        // Send a ping to confirm a successful connection
+        try
+        {
+            var result = database.RunCommand<BsonDocument>(new BsonDocument("ping", 1));
+            Console.WriteLine("Pinged your deployment. You successfully connected to MongoDB!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+
+
+        Console.WriteLine("Starting execution");
         _ = typeof(ObjectsKit).Assembly; // INFO: Force objects kit to initialize
 
         Console.WriteLine("Receiving version");
