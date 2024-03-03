@@ -14,6 +14,8 @@ jobs:
       MONGO_CONNECT: ${{ secrets.MONGO_CONNECT }}
     runs-on: ubuntu-latest
     steps:
+      - name: Debug MONGO_CONNECT
+        run: echo $MONGO_CONNECT
       - name: Checkout code
         uses: actions/checkout@v4.1.1
       - name: Setup .NET Core SDK
@@ -25,11 +27,9 @@ jobs:
       - name: Extract functionInputSchema
         id: extract_schema
         working-directory: "SpeckleAutomateDotnetExample"
-        env:
-          MONGO_CONNECT: mongodb+srv://aecuser:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster
         run: |
           echo $MONGO_CONNECT
-          dotnet build --environment MONGO_CONNECT="${{ secrets.MONGO_CONNECT }}"
+          dotnet build /p:MON_CON=ABC
           dotnet run generate-schema ${HOME}/functionSchema.json
           cat ${HOME}/functionSchema.json
       - name: Speckle Automate Function - Build and Publish
