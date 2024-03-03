@@ -83,7 +83,7 @@ namespace SpeckleAutomateDotnetExample
         public List<ElementObject> Elements { get; set; } = new List<ElementObject>();
         public List<DetailPart> DetailPart { get; set; } = new List<DetailPart>();
         public Metadata Metadata { get; set; }
-        public List<SpeckleData> SpeckleData { get; set; } = new List<SpeckleData>();
+        //public List<SpeckleData> SpeckleData { get; set; } = new List<SpeckleData>();
 
 
         [BsonExtraElements()]
@@ -121,11 +121,11 @@ namespace SpeckleAutomateDotnetExample
         public DateTime? DateAdded { get; set; }
     }
 
-    public class SpeckleData
-    {
-        public string? StreamID { get; set; }
-        public string? BaseObjectID { get; set; }
-    }
+    //public class SpeckleData
+    //{
+    //    public string? StreamID { get; set; }
+    //    public string? BaseObjectID { get; set; }
+    //}
 
     public class DetailInfo
     {
