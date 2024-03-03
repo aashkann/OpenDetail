@@ -45,7 +45,7 @@ namespace SpeckleAutomateDotnetExample
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId? Id { get; set; }
         public string? URL { get; set; }
-
+        
         public string? Keyimage { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }

@@ -16,9 +16,8 @@
         FunctionInputs functionInputs
       )
       {
-        
         // Connect to MongoDB
-        string connectionUri = "mongodb+srv://aecuser:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster";
+        string connectionUri = Environment.GetEnvironmentVariable("MONGO_CONNECT") ?? "mongodb+srv://aecuser:aechack2024@opendetailcluster.qgxprtm.mongodb.net/?retryWrites=true&w=majority&appName=OpenDetailCluster";
 
             var settings = MongoClientSettings.FromConnectionString(connectionUri);
             settings.ServerApi = new ServerApi(ServerApiVersion.V1);
@@ -47,22 +46,27 @@
         var commitObject = await automationContext.ReceiveVersion();
 
         Console.WriteLine("Received version: " + commitObject);
+        var objectId = commitObject.id; // This retrieves the object ID from the commit object.
 
         var openDetailObject = new DetailObject();
+        //openDetailObject.populate();
         openDetailObject.Id = ObjectId.GenerateNewId();
-        var count = commitObject
-          .Flatten();
-          
-            var speckleURL = commitObject.Flatten();
-            openDetailObject.URL = automationContext.SpeckleClient.ServerUrl;
 
-            var bsonDocument = openDetailObject.ToBsonDocument();
+        var speckleURL = commitObject.Flatten();
+
+        //
+        string speckleServerRoot = "https://app.speckle.systems";
+        string speckleProject = automationContext.AutomationRunData.ProjectId;
+        string streamId = automationContext.AutomationRunData.ProjectId;
+        //here i need to get my object id 
+        openDetailObject.URL = $"{speckleServerRoot}/streams/{streamId}/objects/{objectId}";
+
+        var bsonDocument = openDetailObject.ToBsonDocument();
 
             // Insert the BSON document into the collection
             collection.InsertOne(bsonDocument);
 
-            Console.WriteLine($"Counted {count} objects");
 
-        automationContext.MarkRunSuccess($"Counted {count} objects");
+        automationContext.MarkRunSuccess($"Counted {openDetailObject.URL} objects");
       }
     }
