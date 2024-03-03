@@ -55,7 +55,7 @@
         var speckleURL = commitObject.Flatten();
 
         //
-        string speckleServerRoot = "https://app.speckle.systems";
+        string speckleServerRoot = "https://latest.speckle.systems";
         string speckleProject = automationContext.AutomationRunData.ProjectId;
         string streamId = automationContext.AutomationRunData.ProjectId;
         //here i need to get my object id 
