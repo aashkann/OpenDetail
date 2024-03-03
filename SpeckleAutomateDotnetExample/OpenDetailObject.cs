@@ -128,9 +128,9 @@ namespace SpeckleAutomateDotnetExample
         public string? BaseObjectID { get; set; }
     }
 
-    public class dataInfo
+    public class DetailInfo
     {
-        public void Populate()
+        public DetailObject Populate()
         {
             // Create BuildupParts for "CLT BEAM"
             List<BuildupPart> cltBeamBuildupParts = new List<BuildupPart>
@@ -472,6 +472,7 @@ new BuildupPart
                 Metadata = metadata,
             };
 
+            return detail;
         }
 
     }

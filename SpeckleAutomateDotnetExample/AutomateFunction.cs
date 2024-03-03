@@ -48,8 +48,9 @@
         Console.WriteLine("Received version: " + commitObject);
         var objectId = commitObject.id; // This retrieves the object ID from the commit object.
 
-        var openDetailObject = new DetailObject();
-        //openDetailObject.populate();
+        var detailInfo = new DetailInfo();
+        var openDetailObject = detailInfo.Populate();
+
         openDetailObject.Id = ObjectId.GenerateNewId();
 
         var speckleURL = commitObject.Flatten();
