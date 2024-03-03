@@ -74,8 +74,8 @@ namespace SpeckleAutomateDotnetExample
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId? Id { get; set; }
         public string? URL { get; set; }
-        public string? streamID { get; set; }
-        public string? objectID { get; set; }
+        public string? StreamID { get; set; }
+        public string? ObjectID { get; set; }
         public string? Keyimage { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
@@ -104,7 +104,6 @@ namespace SpeckleAutomateDotnetExample
         public string? Name { get; set; }
         public string? Code { get; set; }
         public List<BuildupPart> BuildupParts { get; set; } = new List<BuildupPart>();
-        public List<DetailPart> DetailParts { get; set; } = new List<DetailPart>();
         public ElementType ElementType { get; set; }
     }
 
@@ -470,6 +469,8 @@ new BuildupPart
                 Elements = elements,
                 DetailPart = detailParts,
                 Metadata = metadata,
+                StreamID = "",
+                ObjectID = "",
             };
 
             return detail;

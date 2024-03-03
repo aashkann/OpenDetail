@@ -61,6 +61,10 @@
         string speckleServerRoot = "https://latest.speckle.systems";
         string speckleProject = automationContext.AutomationRunData.ProjectId;
         string streamId = automationContext.AutomationRunData.ProjectId;
+
+        openDetailObject.StreamID =  streamId;
+        openDetailObject.ObjectID = objectId;
+
         //here i need to get my object id 
         openDetailObject.URL = $"{speckleServerRoot}/streams/{streamId}/objects/{objectId}";
 
