@@ -17,7 +17,7 @@ jobs:
       - name: Debug MONGO_CONNECT
         run: echo $MONGO_CONNECT
       - name: Checkout code
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.2
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3.2.0
         with:
